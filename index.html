@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  body { font-family: sans-serif; background:#0f172a; color:#fff; margin:0; padding:20px; }
+  .card { background:#1e293b; padding:20px; border-radius:12px; max-width:500px; margin:0 auto 20px; }
+  input, textarea { width:100%; padding:10px; margin:6px 0; border-radius:8px; border:none; }
+  button { width:100%; padding:12px; margin-top:8px; border:none; border-radius:8px; background:#6366f1; color:#fff; font-size:16px; cursor:pointer; }
+  .post { background:#334155; padding:12px; border-radius:8px; margin-bottom:10px; }
+  .small { font-size:12px; color:#94a3b8; }
+  #feed { max-width:500px; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<div id="auth" class="card">
+  <h2>PULSE</h2>
+  <input id="email" type="email" placeholder="이메일">
+  <input id="password" type="password" placeholder="비밀번호">
+  <button onclick="signUp()">회원가입</button>
+  <button onclick="signIn()" style="background:#22c55e">로그인</button>
+  <p id="msg" class="small"></p>
+</div>
+
+<div id="app" style="display:none">
+  <div class="card">
+    <h3>새 글 쓰기</h3>
+    <textarea id="content" rows="3" placeholder="무슨 생각을 하고 있나요?"></textarea>
+    <button onclick="createPost()">게시</button>
+  </div>
+  <div id="feed"></div>
+  <button onclick="signOut()" style="background:#ef4444">로그아웃</button>
+</div>
+
+<script>
+const SUPABASE_URL = "https://gswvnkijgrvihoksqffj.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_szD2nY8QvqxgdrlwDqg18g_cwWYCCMP";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function signUp() {
+  const { error } = await sb.auth.signUp({
+    email: email.value, password: password.value
+  });
+  msg.textContent = error ? error.message : "회원가입 성공! 이메일 확인 후 로그인하세요.";
+}
+
+async function signIn() {
+  const { error } = a
